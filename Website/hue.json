@@ -1,0 +1,142 @@
+{
+    "1": {
+        "state": {
+            "on": false,
+            "bri": 131,
+            "hue": 19542,
+            "sat": 151,
+            "effect": "none",
+            "xy": [
+                0.3287,
+                0.5138
+            ],
+            "ct": 176,
+            "alert": "select",
+            "colormode": "hs",
+            "mode": "homeautomation",
+            "reachable": true
+        },
+        "swupdate": {
+            "state": "noupdates",
+            "lastinstall": "2023-05-31T12:16:03"
+        },
+        "type": "Extended color light",
+        "name": "Lamp B306",
+        "modelid": "LCA001",
+        "manufacturername": "Signify Netherlands B.V.",
+        "productname": "Hue color lamp",
+        "capabilities": {
+            "certified": true,
+            "control": {
+                "mindimlevel": 200,
+                "maxlumen": 800,
+                "colorgamuttype": "C",
+                "colorgamut": [
+                    [
+                        0.6915,
+                        0.3083
+                    ],
+                    [
+                        0.17,
+                        0.7
+                    ],
+                    [
+                        0.1532,
+                        0.0475
+                    ]
+                ],
+                "ct": {
+                    "min": 153,
+                    "max": 500
+                }
+            },
+            "streaming": {
+                "renderer": true,
+                "proxy": true
+            }
+        },
+        "config": {
+            "archetype": "sultanbulb",
+            "function": "mixed",
+            "direction": "omnidirectional",
+            "startup": {
+                "mode": "safety",
+                "configured": true
+            }
+        },
+        "uniqueid": "00:17:88:01:08:37:53:48-0b",
+        "swversion": "1.104.2",
+        "swconfigid": "01F50378",
+        "productid": "Philips-LCA001-4-A19ECLv6"
+    },
+    "3": {
+        "state": {
+            "on": false,
+            "bri": 133,
+            "hue": 629,
+            "sat": 200,
+            "effect": "none",
+            "xy": [
+                0.6153,
+                0.3304
+            ],
+            "ct": 500,
+            "alert": "select",
+            "colormode": "hs",
+            "mode": "homeautomation",
+            "reachable": true
+        },
+        "swupdate": {
+            "state": "noupdates",
+            "lastinstall": "2023-05-31T12:15:56"
+        },
+        "type": "Extended color light",
+        "name": "Lamp B304",
+        "modelid": "LCA001",
+        "manufacturername": "Signify Netherlands B.V.",
+        "productname": "Hue color lamp",
+        "capabilities": {
+            "certified": true,
+            "control": {
+                "mindimlevel": 200,
+                "maxlumen": 800,
+                "colorgamuttype": "C",
+                "colorgamut": [
+                    [
+                        0.6915,
+                        0.3083
+                    ],
+                    [
+                        0.17,
+                        0.7
+                    ],
+                    [
+                        0.1532,
+                        0.0475
+                    ]
+                ],
+                "ct": {
+                    "min": 153,
+                    "max": 500
+                }
+            },
+            "streaming": {
+                "renderer": true,
+                "proxy": true
+            }
+        },
+        "config": {
+            "archetype": "sultanbulb",
+            "function": "mixed",
+            "direction": "omnidirectional",
+            "startup": {
+                "mode": "safety",
+                "configured": true
+            }
+        },
+        "uniqueid": "00:17:88:01:08:32:52:47-0b",
+        "swversion": "1.104.2",
+        "swconfigid": "01F50378",
+        "productid": "Philips-LCA001-4-A19ECLv6"
+    }
+}
