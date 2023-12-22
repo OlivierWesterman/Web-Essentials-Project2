@@ -5,5 +5,5 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./website:/home/student/Web-Essentials-Project2/Website/dashboard
+      - ./website:/usr/local/apache2/htdocs/
 restart: always
