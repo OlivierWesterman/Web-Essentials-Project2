@@ -5,5 +5,5 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./website:/dashboard
+      - ./Website:/dashboard
  restart: always
