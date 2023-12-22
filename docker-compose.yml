@@ -5,5 +5,5 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./Website/dashboard/index.html
- restart: always
+      - ./website:/usr/local/apache2/htdocs
+restart: always
