@@ -26,8 +26,8 @@ function getLampsInfo() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             let response = yield window.fetch(`http://${ipAdres}/api/${user}/lights/`, { method: "GET" });
-            //http://10.10.10.10/api/AYu2d2WypYXgb83WaEh9NkWldFN8KAJoStCUjP8e/lights/
-            console.log(response);
+            //example url: http://10.10.10.10/api/AYu2d2WypYXgb83WaEh9NkWldFN8KAJoStCUjP8e/lights/
+            //console.log(response);  
             let json = yield response.json();
             return yield json;
         }
@@ -62,9 +62,9 @@ function setLightState(id, state) {
             body: JSON.stringify({ on: state })
         });
         // http://10.10.10.10/api/AYu2d2WypYXgb83WaEh9NkWldFN8KAJoStCUjP8e/lights/1/state
-        console.log("this is" + response);
+        //console.log("this is" + response);
         const json = yield response.json();
-        console.log(json);
+        //console.log(json);    
         return json;
     });
 }
@@ -104,6 +104,7 @@ function setLightColor(id, hue, bri, sat) {
             body: JSON.stringify({ "sat": sat, "bri": bri, "hue": hue })
         });
         let json = yield response.json();
+        console.log(json);
         return json;
     });
 }

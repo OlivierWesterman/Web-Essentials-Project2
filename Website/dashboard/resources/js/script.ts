@@ -15,11 +15,12 @@ interface Ilights {
     //        bri, hue and sat with the type number.
     id: string;
     name: string;
-    state: string;
+    state: boolean;
     bri: number;
     hue: number;
     sat: number;
-}
+    
+    }
 
 interface Iplugs {
     // Todo: add the variables ip, id, device and name with the type string,
@@ -109,17 +110,7 @@ async function placeShellyOnDom(): Promise<void> {
                                     state: plugInfo.devices_status[key].relays[0].ison ? "off" : "on", 
                                     power: plugInfo.devices_status[key].meters[0].power};
                 plugs.push(plug);
-                // Making Iplug values easier to access    
-                /*for (let i = 0; i < plugs.length; i++) {
-                        plugs[i].id = plugInfo.devices_status[key]._dev_info.id;
-                        plugs[i].ip = plugInfo.devices_status[key].wifi_sta.ip;
-                        plugs[i].device = plugInfo.devices_status[key]._dev_info.code;
-                        plugs[i].name = "Shelly Plug " + (i+1);
-                        plugs[i].state = plugInfo.devices_status[key].relays[0].ison ? "on" : "off";
-                        plugs[i].power = plugInfo.devices_status[key].meters[0].power;
-
-                    }*/
-                    console.log(plugs);
+                //console.log(plugs);
             }   
         } 
     }
@@ -152,7 +143,6 @@ if (plugs != undefined) {
             let powerColor = plugs[i].state ? "red" : "green";
             let power = plugs[i].power;
             //console.log(power);
-            //let plugIp = plugs[i].ip;
             //console.log(plugIp);
             let container = document.getElementById('container') as HTMLBodyElement;
     
@@ -203,9 +193,14 @@ if (plugs != undefined) {
             // Adding event listener to the power icon
             powerIcon.addEventListener('click', async() =>{   
              await setPlugState("0", plugs[i].ip, plugs[i].state)
-             if (plugs[i].state== "on") {powerIcon.style.color = "green"; plugs[i].state= "off";
-                                        itemBodyImage.style.color = "yellow"; }
-             else {powerIcon.style.color = "red" ; itemBodyImage.style.color = "gray"; plugs[i].state= "on";}})
+             if (plugs[i].state == "on") 
+             {powerIcon.style.color = "green"; 
+             plugs[i].state= "off";
+             itemBodyImage.style.color = "yellow"; }
+             else 
+             {powerIcon.style.color = "red" ;
+              itemBodyImage.style.color = "gray";
+              plugs[i].state= "on";}})
         }
     }
 }
@@ -240,44 +235,31 @@ async function placeHueOnDom(): Promise<void> {
     
     // Todo: use the function getLampsInfo the get the information on detected
     //       Philips Hue lamps
-    const lampsInfo = await getLampsInfo();
-	const lampsValue = Object.keys(lampsInfo);
+    let lampsInfo = await getLampsInfo();
+	let lampsValue = Object.keys(lampsInfo);
     //let lampsInfo = {id : 2, name : "Hue Lamp 1", state : {on : true, bri : 254, hue : 10000, sat : 254}, uniqueid : "00:17:88:01:02:03:04:05-0b", type : "Extended color light"};
     console.log(lampsInfo);
     console.log("lamps loaded into lampInfo");
     //       if there are lamps then iterate through them and push the information
     //       to the variable lampen. 
     // If there are lamps, iterate through them and push the information to the variable lampen.
-if (lampsInfo !== undefined) {
-    const lampsValue = Object.keys(lampsInfo);
+if (lampsInfo != undefined) {
+    let lampsValue = Object.keys(lampsInfo);
     for (let l = 0; l < lampsValue.length; l++) {
-        const lampId = lampsValue[l];
-        const lamp : Ilights ={
+        let key = lampsValue[l];
+        let lamp : Ilights ={
             id: lampsValue[l],
-            name: lampsInfo[lampId].name,
-            state: lampsInfo[lampId].state.on ? "on" : "off",
-            bri: lampsInfo[lampId].state.bri,
-            hue: lampsInfo[lampId].state.hue,
-            sat: lampsInfo[lampId].state.sat
+            name: lampsInfo[key].name,
+            state: lampsInfo[key].state.on,
+            bri: lampsInfo[key].state.bri,
+            hue: lampsInfo[key].state.hue,
+            sat: lampsInfo[key].state.sat
         };
         lampen.push(lamp);
-        console.log(lamp.id);
+        //console.log(lampen);
     }
 } 
 
-    /*if (lampsInfo != undefined) {
-        for (let l = 0; l < lampsValue.length; l++) {
-                let lamp : Ilights = { 
-                                    id: lampsInfo.uniqueid, 
-                                    name: lampsInfo.name, 
-                                    state: lampsInfo.state.on ? "off" : "on", 
-                                    bri: lampsInfo.state.bri,
-                                    hue: lampsInfo.state.hue,
-                                    sat: lampsInfo.state.sat};
-                lampen.push(lamp);
-                console.log(lamp.id);
-            }         
-        } */
     //       iterate through lampen and add each lamp as a tile to the div with id container
     //       a tile has the following structure:
     //       <div class="item">
@@ -294,9 +276,10 @@ if (lampsInfo !== undefined) {
     //       for each palette icon a eventlistener is added that activates the colorpicker tile
     //       for each slider a eventlistener is added that uses the function setLightBri to change the brightness of the lamp
     //       for each power icon a eventlistener is added that uses the function setLightState to change the state of the lamp
-    if (lampen !== undefined) {
+    if (lampen != undefined) {
         for (let i = 0; i < lampen.length; i++) {
-            let powerColor = lampen[i].state ? "red" : "green";
+            let lampPower = lampen[i].state ? "green" : "red";
+            let lampColor = "hsl(" + ((360*lampen[i].hue)/65535) + "," + (100*lampen[i].sat/254) + "%," + (100*lampen[i].bri/254) + "%)";
             let container = document.getElementById('container') as HTMLBodyElement;
     
             // Creating the main div for each lamp
@@ -319,19 +302,17 @@ if (lampsInfo !== undefined) {
             let powerIcon = document.createElement('i');
             powerIcon.classList.add("fa-solid", "fa-power-off");
             powerIcon.id = "power" + lampen[i].name;
-            powerIcon.style.color = powerColor;
+            powerIcon.style.color = lampPower;
             itemFooterDiv.appendChild(powerIcon);
     
             // Creating the lamp icon
             let lampIcon = document.createElement('i');
             lampIcon.classList.add("fa-solid", "fa-lightbulb", "fa-2xl");
             lampIcon.id = "bulb" + lampen[i].name; 
-            lampIcon.style.color = "hsl(" + ((360*lampen[i].hue)/65535) + "," + (100*lampen[i].sat/254) + "%," + (100*lampen[i].bri/254) + "%)";
-            lampIcon.style.filter = "brightness(" + 25 + "%)";
+            lampIcon.style.color = lampColor;
             itemBodyDiv.appendChild(lampIcon);
 
             // Creating the palette icon
-            //<i class="fa-solid fa-palette" id="color<number of the lamp>"></i>
             let paletteIcon = document.createElement('i');
             paletteIcon.classList.add("fa-solid", "fa-palette");
             paletteIcon.id = "color" + lampen[i].name;
@@ -343,7 +324,6 @@ if (lampsInfo !== undefined) {
             itemBodyDiv.appendChild(itemBodyH5);
     
             // Creating the brightness slider
-            //<input type="range" min="0" max="255" class="slider" id="dimming<number of the lamp>" disabled="">
             let brightnessSlider = document.createElement('input');
             brightnessSlider.type = "range";
             brightnessSlider.min = "0";
@@ -355,29 +335,18 @@ if (lampsInfo !== undefined) {
     
             // Adding event listener to the power icon
             powerIcon.addEventListener("click", async () => {
-                let lampsState = await setLightState(Number(lampen[i].id), lampen[i].state === "off");
-                let isOn = lampsState.state;
-                console.log(isOn);
-                lampen[i].state = lampsState.state 
-                //lampen[i].state === "on" ? lampen[i].state = "on" : lampen[i].state = "off";
-                powerIcon.style.color = isOn === "off" ? "green" : "red";
-        })
-            /*powerIcon.addEventListener('click', async () => {
-                console.log("lamepen.state = " + Boolean(lampen[i].state))
-                let relay= await setLightState(Number(lampen[i].id), Boolean(lampen[i].state));
-                //console.log("relay.state = " + relay.0.success.lights/1/state/on);
-                //console.log(relay.state);
-                if (lampen[i].state) {
-                    powerIcon.style.color = "green";
-                } else {
-                    powerIcon.style.color = "red";
+                let flippedState = !lampen[i].state;
+                let response = await setLightState(Number(lampen[i].id), flippedState);
+                if (response) {
+                    lampen[i].state = flippedState;
+                    powerIcon.style.color = flippedState ? "green" : "red";
                 }
-                relay.state = !relay.state;
-
-            });*/
+            });
     
-            // Adding event listener to the lamp icon (palette)
+            // Adding event listener to the palette icon
             paletteIcon.addEventListener('click', () => {
+                lampColor = "hsl(" + ((360*lampen[i].hue)/65535) + "," + (100*lampen[i].sat/254) + "%," + (100*lampen[i].bri/254) + "%)";
+                colorPicker = lampen.indexOf(lampen[i]);
                 let colorWheel = document.getElementById('choosecolor') as HTMLBodyElement;
                 if (colorWheel.style.display == "block") {
                     colorWheel.style.display = "none";
@@ -444,13 +413,14 @@ function setColorListeners(){
         let hsl = rgbToHSB(colorRGB.r,colorRGB.g,colorRGB.b);
         console.log(colorPicker);
         lampen[colorPicker].hue=hsl.hue;
+        
         lampen[colorPicker].bri=hsl.bri;
         lampen[colorPicker].sat=hsl.sat;
         // Setting the color on the lamp
         await setLightColor(Number(lampen[colorPicker].id),lampen[colorPicker].hue,lampen[colorPicker].bri,lampen[colorPicker].sat);
         // Adjust the information on the DOM
-        (document.getElementById("bulb"+(colorPicker+1)) as HTMLElement).style.color = "hsl(" + (360*lampen[colorPicker].hue/65535) + "," + (100*lampen[colorPicker].sat/254) + "%," + (100*lampen[colorPicker].bri/254) + "%)";
-        (document.getElementById("dimming"+(colorPicker+1)) as HTMLFormElement).value = lampen[colorPicker].bri;
+        (document.getElementById("bulb" + lampen[colorPicker].name) as HTMLElement).style.color = "hsl(" + (360*lampen[colorPicker].hue/65535) + "," + (100*lampen[colorPicker].sat/254) + "%," + (100*lampen[colorPicker].bri/254) + "%)";
+        (document.getElementById("dimming" + lampen[colorPicker].name) as HTMLFormElement).value = lampen[colorPicker].bri;
         // deactivate colorpicker again
         colorPicker=-1;
         (document.getElementById('choosecolor') as HTMLElement).style.display= "none";

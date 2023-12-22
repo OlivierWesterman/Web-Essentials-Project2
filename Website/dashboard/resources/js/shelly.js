@@ -37,10 +37,10 @@ function getShellyPlugInfo() {
 */
 function GetPlugPower(id) {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log(`${host}/device/status?id=${id}&auth_key=${authkey}`);
+        //console.log(`${host}/device/status?id=${id}&auth_key=${authkey}`);
         const response = yield fetch(`${host}/device/status?id=${id}&auth_key=${authkey}`, { method: "GET" });
         const json = yield response.json();
-        console.log(json.data.device_status.meters[0].power);
+        //console.log(json.data.device_status.meters[0].power);
         return json.data.device_status.meters[0].power;
     });
 }
@@ -52,7 +52,7 @@ function GetPlugPower(id) {
 */
 function setPlugState(device, ip, state) {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log('f(', device, ',', ip, ',', state, ')');
+        //console.log('f(',device,',',ip,',',state,')');
         const response = yield fetch(`http://${ip}/relay/${device}?turn=${state}`, { method: "POST", mode: 'no-cors', headers: { 'Content-Type': 'application/json' } });
     });
 }

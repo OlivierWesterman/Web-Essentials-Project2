@@ -19,8 +19,8 @@ const user:string    = "AYu2d2WypYXgb83WaEh9NkWldFN8KAJoStCUjP8e";
 async function getLampsInfo(): Promise<any> {
     try{
         let response = await window.fetch(`http://${ipAdres}/api/${user}/lights/`, { method: "GET" });  
-        //http://10.10.10.10/api/AYu2d2WypYXgb83WaEh9NkWldFN8KAJoStCUjP8e/lights/
-        console.log(response);  
+        //example url: http://10.10.10.10/api/AYu2d2WypYXgb83WaEh9NkWldFN8KAJoStCUjP8e/lights/
+        //console.log(response);  
         let json = await response.json();    
         return await json;
     } 
@@ -53,9 +53,9 @@ async function setLightState(id: number, state: boolean): Promise<any> {
         body: JSON.stringify({ on: state })
     });
     // http://10.10.10.10/api/AYu2d2WypYXgb83WaEh9NkWldFN8KAJoStCUjP8e/lights/1/state
-    console.log("this is" + response);
+    //console.log("this is" + response);
     const json = await response.json();
-    console.log(json);    
+    //console.log(json);    
     return json;
 };
 
@@ -95,6 +95,7 @@ async function setLightColor(id: number, hue: number, bri:number, sat:number): P
         body: JSON.stringify({"sat":sat, "bri":bri,"hue":hue})
     });
     let json: any = await response.json();
+    console.log(json);
     return json;
 };
 

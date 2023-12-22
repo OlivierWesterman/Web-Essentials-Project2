@@ -28,10 +28,10 @@ async function getShellyPlugInfo(): Promise<any> {
 */
 
 async function GetPlugPower(id: string): Promise<any> {
-    console.log(`${host}/device/status?id=${id}&auth_key=${authkey}`);
+    //console.log(`${host}/device/status?id=${id}&auth_key=${authkey}`);
     const response = await fetch(`${host}/device/status?id=${id}&auth_key=${authkey}`, { method: "GET" });
     const json = await response.json();    
-    console.log(json.data.device_status.meters[0].power);
+    //console.log(json.data.device_status.meters[0].power);
     return json.data.device_status.meters[0].power;
 };
 
@@ -42,7 +42,7 @@ async function GetPlugPower(id: string): Promise<any> {
 */
 
 async function setPlugState(device: string, ip: string, state: string): Promise<any> {
-    console.log('f(',device,',',ip,',',state,')');
+    //console.log('f(',device,',',ip,',',state,')');
     const response = await fetch(`http://${ip}/relay/${device}?turn=${state}`, { method: "POST", mode:'no-cors', headers: { 'Content-Type': 'application/json'}});
 };
 
