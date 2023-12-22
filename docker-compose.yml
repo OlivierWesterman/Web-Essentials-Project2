@@ -7,4 +7,3 @@ services:
     volumes:
       - ./website:/dashboard/apache2/htdocs
  restart: always
- /home/student/Web-Essentials-Project2/Website/dashboard
